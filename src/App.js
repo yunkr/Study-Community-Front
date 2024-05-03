@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Main from './pages/main/Main'; // Main 컴포넌트를 import 합니다.
+import Header from './components/header/Header'; // 다른 컴포넌트도 필요하다면 import 해주세요.
+import Post from './pages/post/Post';
+import PostDetail from './pages/post/PostDetail';
+import CreatePost from './pages/post/CreatePost';
+import Study from './pages/study/Study';
+import StudyDetail from './pages/study/StudyDetail';
+import CreateStudy from './pages/study/CreateStudy';
+import Profile from './pages/profile/Profile';
+import MyPage from './pages/mypage/MyPage';
 
-function App() {
+const App = () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <React.Fragment>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/Post" element={<Post />} />
+          <Route path="/Post/:postId" element={<PostDetail />} />
+          <Route path="/CreatePost" element={<CreatePost />} />
+          <Route path="/Study" element={<Study />} />
+          <Route path="/Study/:studyId" element={<StudyDetail />} />
+          <Route path="/CreateStudy" element={<CreateStudy />} />
+          <Route path="/Profile" element={<Profile />} />
+          <Route path="/MyPage" element={<MyPage />} />
+
+        </Routes>
+      </React.Fragment>
+    </Router>
   );
-}
+};
 
 export default App;

@@ -1,0 +1,38 @@
+.mypage-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px;
+  background-color: #fff; /* 흰색 배경 */
+}
+
+.mypage-sidebar {
+  width: 200px;
+  padding: 20px;
+}
+
+.mypage-content {
+  flex: 1;
+  padding: 20px;
+  width: 100%; /* 가로 공간 꽉 채우기 */
+}
+  
+  .category-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .category-list li {
+    margin-bottom: 10px;
+  }
+  
+  .category-box {
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .category-box h3 {
+    margin-top: 0;
+  }

@@ -1,0 +1,46 @@
+a {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-decoration-line: none;
+    font-weight: bold;
+    color: black;
+  }
+  
+  a:hover {
+    color: rgb(94, 94, 198);
+  }
+  
+  .header-wrapper {
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 1.2rem 4rem;
+    color: #282c34;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: snow;
+  }
+  
+  .header-wrapper .header-title a {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    font-family: 'Pacifico', cursive;
+  }
+  
+  .header-wrapper .header-menu {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .header-wrapper .header-menu a {
+    font-size: 1.5rem;
+    font-family: 'Noto Sans KR', sans-serif;
+    flex-shrink: 0;
+    margin: 0 1rem;
+  }
