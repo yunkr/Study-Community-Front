@@ -65,7 +65,6 @@ const Study = () => {
             </div>
             <div className="study-details-view-likes">
               <span>조회수: {study.viewCount}</span>
-              <span>좋아요: {study.likes}</span>
             </div>
           </div>
         </Link>
@@ -83,7 +82,7 @@ const Study = () => {
           onChange={(e) => setSearchKeyword(e.target.value)} 
         />
         <button onClick={handleSearch}>검색</button>
-        <Link to="/CreateStudy" className="create-study-button">게시물 등록</Link>
+        <Link to="/CreateStudy" className="create-study-button">스터디 등록</Link>
       </div>
       {loading ? (
         <p>Loading...</p>

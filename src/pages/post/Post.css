@@ -13,7 +13,7 @@
 }
 
 .search-bar input {
-  width: 70%;
+  flex-grow: 1; /* 입력 박스를 더 길게 설정 */
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -21,7 +21,8 @@
 }
 
 .search-bar button {
-  padding: 10px 20px;
+  width: 100px; /* 버튼의 너비를 자동으로 설정 */
+  padding: 5px 10px; /* 버튼 크기를 줄이기 위해 패딩 값 조정 */
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -30,13 +31,18 @@
 }
 
 .create-post-button {
-  padding: 10px 20px;
+  width: 150px; /* 너비 설정 */
+  height: 40px; /* 높이 설정 */
   background-color: #28a745; /* 예쁜 버튼 색상 */
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-left: auto; /* 오른쪽으로 정렬 */
+  margin-left: 20px; /* 검색 버튼과의 간격을 설정 */
+  display: flex; /* Flex 레이아웃 사용 */
+  align-items: center; /* 세로 가운데 정렬 */
+  justify-content: center; /* 가로 가운데 정렬 */
+  text-align: center; /* 텍스트 가운데 정렬 */
 }
 
 .create-post-button:hover {

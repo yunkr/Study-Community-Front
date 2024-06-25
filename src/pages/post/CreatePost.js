@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import './CreatePost.css'; // 필요한 CSS 파일을 import
 
 const CreatePost = () => {
@@ -11,16 +11,41 @@ const CreatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Set으로 변환
+    const tagsSet = new Set(tags.split(',').map(tag => tag.trim()));
+
+    const postData = {
+      memberId: 1, // 고정된 memberId 값
+      title,
+      content,
+      tags: Array.from(tagsSet), // Set을 Array로 변환하여 전송
+      postStatus: 'POST_REGISTRATION', // 기본값 설정
+      createdAt: new Date().toISOString(),
+      modifiedAt: new Date().toISOString()
+    };
+
+    console.log('Sending post data:', postData); // 요청 데이터 로그 출력
+
     try {
-      await axios.post('http://localhost:8080/posts', {
-        title,
-        content,
-        tags: tags.split(',').map(tag => tag.trim()),
-      });
+      const response = await axios.post('http://localhost:8080/posts', postData);
+      console.log('Post added successfully:', response.data);
       // 게시물 등록 후 Post 페이지로 이동
       navigate('/Post');
     } catch (error) {
-      console.error('Error adding post:', error);
+      if (error.response) {
+        // 서버가 응답을 반환했으나, 2xx 범위가 아님
+        console.error('Error response data:', error.response.data);
+        console.error('Error response status:', error.response.status);
+        console.error('Error response headers:', error.response.headers);
+      } else if (error.request) {
+        // 요청이 만들어졌으나 응답을 받지 못함
+        console.error('Error request:', error.request);
+      } else {
+        // 오류를 발생시킨 요청 설정
+        console.error('Error message:', error.message);
+      }
+      console.error('Error config:', error.config);
     }
   };
 

@@ -11,18 +11,7 @@ const Main = () => {
         댓글로 여러 의견을 나눠보세요✏️
       </div>
       <div className="about-project">
-        이 프로젝트는 Duckgugong이 레퍼런스로 쓰기위해<br/>
-        <span>React</span>와
-        <span> TypeORM</span>으로 만들었습니다😎
-      </div>
-      <div className="my-website">
-        <div className="my-website-title">Duckgugong's Website</div>
-        <a href="https://github.com/yunkr" target="_blank">
-          🏴GitHub
-        </a>
-        <a href="https://www.naver.com/" target="_blank">
-          📖 Tistory
-        </a>
+        이 프로젝트는 스터디를 원하는 사용자들을 위한 커뮤니티 플랫폼입니다.😎<br/>
       </div>
     </div>
   )

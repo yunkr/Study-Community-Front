@@ -20,12 +20,12 @@ const CreateStudy = () => {
   useEffect(() => {
     // 스터디 카테고리 목록을 가져오는 함수
     const fetchStudyCategories = async () => {
-        try {
-          const response = await axios.get('http://localhost:8080/studyCategories');
-          setStudyCategories(response.data);
-        } catch (error) {
-          console.error('Error fetching study categories:', error);
-        }
+      try {
+        const response = await axios.get('http://localhost:8080/studyCategories');
+        setStudyCategories(response.data);
+      } catch (error) {
+        console.error('Error fetching study categories:', error);
+      }
     };
 
     fetchStudyCategories();
@@ -33,23 +33,47 @@ const CreateStudy = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Set으로 변환
+    const tagsSet = new Set(tags.split(',').map(tag => tag.trim()));
+
+    const studyData = {
+      memberId: 1, // 고정된 memberId 값
+      title,
+      topic,
+      schedule, // 일정 추가
+      curriculum, // 커리큘럼 추가
+      personnel, // 인원 추가
+      introduction, // 소개 추가
+      precautions, // 주의사항 추가
+      apply, // 지원방법 추가
+      studyCategoryId,
+      tags: Array.from(tagsSet), // Set을 Array로 변환하여 전송
+      createdAt: new Date().toISOString(),
+      modifiedAt: new Date().toISOString()
+    };
+
+    console.log('Sending study data:', studyData); // 요청 데이터 로그 출력
+
     try {
-      await axios.post('http://localhost:8080/studies', {
-        title,
-        topic,
-        schedule, // 일정 추가
-        curriculum, // 커리큘럼 추가
-        personnel, // 인원 추가
-        introduction, // 소개 추가
-        precautions, // 주의사항 추가
-        apply, // 지원방법 추가
-        studyCategoryId,
-        tags: tags.split(',').map(tag => tag.trim()),
-      });
-      // 게시물 등록 후 Study 페이지로 이동
+      const response = await axios.post('http://localhost:8080/studies', studyData);
+      console.log('Study added successfully:', response.data);
+      // 스터디 등록 후 Study 페이지로 이동
       navigate('/Study');
     } catch (error) {
-      console.error('Error adding study:', error);
+      if (error.response) {
+        // 서버가 응답을 반환했으나, 2xx 범위가 아님
+        console.error('Error response data:', error.response.data);
+        console.error('Error response status:', error.response.status);
+        console.error('Error response headers:', error.response.headers);
+      } else if (error.request) {
+        // 요청이 만들어졌으나 응답을 받지 못함
+        console.error('Error request:', error.request);
+      } else {
+        // 오류를 발생시킨 요청 설정
+        console.error('Error message:', error.message);
+      }
+      console.error('Error config:', error.config);
     }
   };
 

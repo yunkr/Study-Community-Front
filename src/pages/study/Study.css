@@ -13,7 +13,7 @@
 }
 
 .search-bar input {
-  width: 70%;
+  width: 70%; /* 입력 박스 너비 */
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -21,22 +21,27 @@
 }
 
 .search-bar button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
+  padding: 10px 20px; /* 버튼 패딩 */
+  background-color: #007bff; /* 버튼 배경색 */
+  color: #fff; /* 버튼 글자색 */
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .create-study-button {
-  padding: 10px 20px;
+  width: 150px; /* 너비 설정 */
+  height: 40px; /* 높이 설정 */
   background-color: #28a745; /* 예쁜 버튼 색상 */
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-left: auto; /* 오른쪽으로 정렬 */
+  margin-left: 20px; /* 검색 버튼과의 간격을 설정 */
+  display: flex; /* Flex 레이아웃 사용 */
+  align-items: center; /* 세로 가운데 정렬 */
+  justify-content: center; /* 가로 가운데 정렬 */
+  text-align: center; /* 텍스트 가운데 정렬 */
 }
 
 .create-study-button:hover {

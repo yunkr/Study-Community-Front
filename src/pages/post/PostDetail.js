@@ -8,40 +8,63 @@ const PostDetail = () => {
     const [post, setPost] = useState(null);
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
+    const [likesCount, setLikesCount] = useState(0); // 좋아요 수 상태 추가
+    const [liked, setLiked] = useState(false); // 좋아요 여부 상태 추가
 
     useEffect(() => {
         const fetchPostAndComments = async () => {
             try {
-                // 특정 게시물 데이터 가져오기
+                // 게시물 데이터 가져오기
                 const postResponse = await axios.get(`http://localhost:8080/posts/${postId}`);
                 setPost(postResponse.data.data);
-    
-                // 특정 게시물의 댓글 데이터 가져오기
+
+                // 댓글 데이터 가져오기
                 const commentsResponse = await axios.get(`http://localhost:8080/postComments/post/${postId}`);
                 setComments(commentsResponse.data);
+
+                // 좋아요 수 가져오기
+                const likesCountResponse = await axios.get(`http://localhost:8080/likes/${postId}/count`);
+                setLikesCount(likesCountResponse.data);
+                
+                // 현재 사용자의 좋아요 상태 가져오기
+                const userLikeResponse = await axios.get(`http://localhost:8080/likes/${postId}/user-like`);
+                setLiked(userLikeResponse.data); 
             } catch (error) {
-                console.error('Error fetching post and comments:', error);
-                setComments([]); // 댓글이 없는 경우 빈 배열로 설정
+                console.error('게시물 및 댓글 가져오기 오류:', error);
+                setComments([]);
             }
         };
-    
-        fetchPostAndComments(); // useEffect 내에서 직접 호출하는 함수
+
+        fetchPostAndComments();
     }, [postId]);
 
+    const handleLike = async () => {
+        try {
+            await axios.post(`http://localhost:8080/likes/${postId}/${postId}/toggle`);
+            if (liked) {
+                setLikesCount(prevCount => prevCount - 1);
+            } else {
+                setLikesCount(prevCount => prevCount + 1);
+            }
+            setLiked(!liked);
+        } catch (error) {
+            console.error('게시물 좋아요 오류:', error);
+        }
+    };
 
     const handleSubmitComment = async (e) => {
         e.preventDefault();
         if (comment.trim() === '') return;
-    
+
         try {
             // 댓글 추가
             await axios.post(`http://localhost:8080/postComments`, { postId: postId, content: comment });
-            // 새로운 댓글 목록에 추가
-            const newComment = { content: comment }; // 새로운 댓글 생성
-            setComments(prevComments => [...prevComments, newComment]); // 새로운 댓글 목록에 추가
-            setComment(''); // 입력창 초기화
+            // 댓글 추가 후 다시 댓글 목록 가져오기
+            const updatedCommentsResponse = await axios.get(`http://localhost:8080/postComments/post/${postId}`);
+            setComments(updatedCommentsResponse.data);
+            setComment('');
         } catch (error) {
-            console.error('Error posting comment:', error);
+            console.error('댓글 작성 오류:', error);
         }
     };
 
@@ -56,9 +79,11 @@ const PostDetail = () => {
                 <div className="post-details">
                     <div className="post-details-view-likes">
                         <span>조회수: {post.viewCount}</span>
-                        <span>좋아요: {post.likes}</span>
+                        <span>좋아요: {likesCount}</span>
                     </div>
-                    <button className="like-button">좋아요</button>
+                    <button className="like-button" onClick={handleLike}>
+                        {liked ? '좋아요 취소' : '좋아요'}
+                    </button>
                 </div>
                 <div className="post-details-tag">
                     <span>태그: {post.tags.join(', ')}</span>
