@@ -44,8 +44,8 @@ const Header = () => {
         {isLoggedIn ? (
           <div style={{ display: 'flex' }}>
             <div className="MenuItem">
-              <Link to="/MyPage" className="MenuLink">
-                My Page
+              <Link to="/Profile" className="MenuLink">
+                My Profile
               </Link>
             </div>
             <div onClick={handleLogout} className="MenuItem">
